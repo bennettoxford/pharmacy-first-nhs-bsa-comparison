@@ -155,6 +155,7 @@ df_dispensing_data_summary <- df_dispensing_data |>
   ) |>
   mutate(consultation_type = str_replace(consultation_type, "^n_pf_consultation_", ""))
 
+fs::dir_create(here("lib", "nhs_comparison_data"))
 write_csv(df_dispensing_data_summary, here("lib", "nhs_comparison_data", "pf_consultation_validation_data.csv"))
 
 # Get counts by region
@@ -192,5 +193,5 @@ df_dispensing_data_summary_by_region <- df_dispensing_data_by_region |>
     values_to = "count"
   ) |>
   mutate(consultation_type = str_replace(consultation_type, "^n_pf_consultation_", ""))
-  
+
 write_csv(df_dispensing_data_summary_by_region, here("lib", "nhs_comparison_data", "pf_consultation_validation_data_by_region.csv"))
