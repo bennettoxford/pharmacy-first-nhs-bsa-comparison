@@ -1,3 +1,32 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(here)
+library(readr)
+library(paletteer)
+```
+
+```{r load-data, message=FALSE, warning=FALSE}
+# Load functions and datasets
+df_measures <- read_csv(
+  here("released_output", "pf_breakdown_measures.csv")
+)
+
+df_pf_consultations <- df_measures %>%
+  filter(measure == "count_pf_consultation_services_combined") %>%
+  filter(interval_start >= "2024-02-01") %>%
+  select(measure, interval_start, numerator)
+
+df_pf_consultations_total <- df_pf_consultations |>
+  mutate(
+    measure = "Pharmacy First Consultation"
+  ) |>
+  select(interval_start, pf_consultation_total = numerator, measure) |>
+  unique()
+
+source(here("lib", "functions", "combine_os_nhsbsa_comparison_data.R"))
+source(here("lib", "functions", "load_comparison_data.R"))
+```
 ### Comparison of Pharmacy First consultation counts in GP records and NHS BSA data
 
 To contextualise the Pharmacy First consultation data in OpenSAFELY-TPP, we compared it with publicly available NHS Business Services Authority (NHS BSA) data.
@@ -7,30 +36,17 @@ We used the *Pharmacy and Appliance Contractor Dispensing Dataset*, which report
 **Figure X**. Monthly counts and ratio of patients with a Pharmacy First consultation code in OpenSAFELY-TPP and the NHS BSA comparison dataset.
 
 ```{r, message=FALSE, warning=FALSE, fig.height=4, fig.width=10}
-# Ideally I would like to load this at the top of this script
-# But this file uses datasets created further down so it easiest to load it here
-df_pf_consultations_total <- df_pf_consultations |>
-  filter(data_desc == "Total") |>
-  mutate(
-    data_desc = "Pharmacy First Consultation"
-  ) |>
-  select(interval_start, pf_consultation_total = value, data_desc) |>
-  unique()
-
-source(here("lib", "functions", "combine_os_nhsbsa_validation_data.R"))
-
 # Creates comparison dataset by combining datasets listed in arguments
 df_pf_consultation_validation_plot <- generate_validation_comparison_dataset(
   df_bsa_validation,
-  df_measures,
-  df_pf_consultations_total,
-  df_pfmed
+  df_pf_consultations_total
 )
 
 # Select colours for groups
 # Group 1:
 colour_group_1 <- "#CF4446FF"
-# Group 1: #1B0C42FFpaletteer_c("viridis::inferno", n = 10)[2]
+# Group 1: #1B0C42FF
+paletteer_c("viridis::inferno", n = 10)[2]
 colour_group_2 <- "#1B0C42FF"
 
 # Create consultation validation plot
@@ -113,40 +129,14 @@ pf_validatio_consultation_plot
 
 ```{r, message=FALSE, warning=FALSE, echo = FALSE}
 # Create figure to compare OpenSAFELY-TPP counts with NHS BSA counts
-df_pf_consultations_total <- df_pf_consultations |>
-  filter(data_desc == "Total") |>
-  mutate(
-    data_desc = "Pharmacy First Consultation"
-  ) |>
-  select(interval_start, pf_consultation_total = value, data_desc) |>
-  unique()
 
-
-source(here("lib", "functions", "combine_os_nhsbsa_validation_data.R"))
 # The sourced script above requires the following datasets:
 # 1. df_bsa_validation (loaded from load_validation_data.R)
-# 2. df_measures (loaded from load_opensafely_outputs.R)
-# 3. df_pf_consultations_total (loaded from lines 233-239)
-# 4. df_pfmed (loaded from load_opensafely_outputs.R)
+# 2. df_pf_consultations_total (loaded from load_opensafely_outputs.R)
 
 # Pharmacy First Consultations
 # Instead of only using the count of PF consultations in OS with a clinical
 # condition we are using all PF consultations with a consultation id
-df_pf_consultation_validation_plot <- pf_validation |>
-  filter(
-    (data_source == "opensafely" &
-      data_desc == "pf_consultation" &
-      count_desc == "consultation_id") |
-      (data_source == "nhs_bsa" &
-        data_desc == "pf_consultation" &
-        count_desc == "consultation_type")
-  )
-
-# Pivot wider to calculate ratio
-df_pf_consultation_validation_plot <- df_pf_consultation_validation_plot |>
-  select(date, data_source, count_method, count_total) |>
-  pivot_wider(names_from = c(data_source, count_method), values_from = count_total) |>
-  mutate(ratio = opensafely_opensafely_tpp / nhs_bsa_count_100pct)
 
 # Select colours for groups
 # Group 1: #CF4446FF
@@ -234,7 +224,7 @@ pf_validation_consultation_plot <- df_pf_consultation_validation_plot |>
 pf_validation_consultation_plot
 
 ggsave(
-  filename = here("released_output", "results", "manuscript", "fig2_pf_os_nhsbsa_comparison.png"),
+  filename = here("output", "fig2_pf_os_nhsbsa_comparison.png"),
   pf_validation_consultation_plot,
   height = 4,
   width = 8
