@@ -36,32 +36,34 @@ get_icb_region_lookup <- function() {
 extract_dates <- function(urls) {
   urls %>%
     map(~ {
-      match <- str_match(.x, ".*Dispensing%20Data%20(\\w+)%20(\\d{2})")[, 2:3]
+      match <- str_match(
+        .x,
+        ".*dispensing_data_(\\d{4})(\\d{2})"
+      )[, 2:3]
 
       if (all(!is.na(match))) {
-        month <- match[1]
-        year <- paste0("20", match[2])
+        year <- match[1]
+        month <- match[2]
 
-        parsed_date <- parse_date_time(
-          paste("1", month, year),
-          orders = "dmy",
-          quiet = TRUE
+        return(
+          format(
+            as.Date(paste(year, month, "01", sep = "-")),
+            "%Y-%m-%d"
+          )
         )
-        if (!is.na(parsed_date)) {
-          return(format(parsed_date, "%Y-%m-%d"))
-        }
       }
+
       return(NA)
     })
 }
 
-get_dispensing_urls <- function(start_date = NULL, end_date = NULL) {
+get_dispensing_urls <- function(start_date = "2024-02-01", end_date = NULL) {
   # This is the URL where the data is linked from
-  url <- "https://www.nhsbsa.nhs.uk/prescription-data/dispensing-data/dispensing-contractors-data"
+  url <- "https://opendata.nhsbsa.net/dataset/pharmacy-and-appliance-contractor-dispensing-data"
 
   # The URL to the data we are interested in follows this URL structure
   # https://www.nhsbsa.nhs.uk/sites/default/files/2024-05/Dispensing%20Data%20Jan%2024%20-%20CSV.csv
-  base_url <- "https://www.nhsbsa.nhs.uk"
+  base_url <- "https://opendata.nhsbsa.net"
 
   response <- GET(url)
   html_content <- content(response, "text", encoding = "UTF-8")
@@ -69,11 +71,11 @@ get_dispensing_urls <- function(start_date = NULL, end_date = NULL) {
   csv_links <- read_html(html_content) %>%
     html_nodes("a") %>%
     html_attr("href") %>%
-    .[grepl("Dispensing%20Data.*\\.csv", .)]
-
+    .[grepl("dispensing_data_.*\\.csv", .)]
+  
   df <- tibble(
     date = as.Date(extract_dates(csv_links) |> unlist()),
-    url = paste0(base_url, csv_links)
+    url = csv_links
   )
 
   if (is.null(start_date)) {
@@ -90,32 +92,51 @@ get_dispensing_urls <- function(start_date = NULL, end_date = NULL) {
   setNames(as.list(df$url), as.character(df$date))
 }
 
-get_dispensing_data <- function(start_date = NULL, end_date = NULL) {
-  dispensing_urls <- get_dispensing_urls(start_date = start_date, end_date = end_date)
+get_dispensing_data <- function(start_date = "2024-02-01", end_date = NULL) {
+  dispensing_urls <- get_dispensing_urls(start_date = "2024-02-01", end_date = NULL)
 
   icb_var_list <- c(
-    "ICBCode",
-    "ICB"
+    "ICB_CODE",
+    "ICB_NAME"
   )
 
-  pf_var_list <- c(
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-AcuteOtitisMedia",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-AcuteSoreThroat",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-Impetigo",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-InfectedInsectBites",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-Shingles",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-Sinusitis",
-    "NumberofPharmacyFirstClinicalPathwaysConsultations-UncomplicatedUTI",
-    "NumberofPharmacyFirstUrgentMedicineSupplyConsultations",
-    "NumberofPharmacyFirstMinorIllnessReferralConsultations"
+ pf_var_list <- c(
+  "pharmacy_first_clinical_pathways_consultations_acute_otitis_media",
+  "pharmacy_first_clinical_pathways_consultations_acute_sore_throat",
+  "pharmacy_first_clinical_pathways_consultations_impetigo",
+  "pharmacy_first_clinical_pathways_consultations_infected_insect_bites",
+  "pharmacy_first_clinical_pathways_consultations_shingles",
+  "pharmacy_first_clinical_pathways_consultations_sinusitis",
+  "pharmacy_first_clinical_pathways_consultations_uncomplicated_uti",
+  "pharmacy_first_urgent_medicine_supply_consultations",
+  "pharmacy_first_minor_illness_referral_consultations",
+  "community_pharmacy_clinic_blood_pressure_checks",
+  "community_pharmacy_contraceptive_ongoing_consultations",
+  "community_pharmacy_contraceptive_initiation_consultations",
+  "community_pharmacy_contraceptive_emergency_consultations"
   )
 
+
+clean_content <- function(x) {
+  x |>
+    stringr::str_to_lower() |>
+    stringr::str_replace_all("[^a-z0-9]+", "_") |>
+    stringr::str_replace_all("^_|_$", "")
+  }
+  
   df <- dispensing_urls |>
-    map(read_csv,
-      name_repair = janitor::make_clean_names
-    ) |>
-    bind_rows(.id = "date") |>
-    select(date, all_of(janitor::make_clean_names(c(icb_var_list, pf_var_list))))
+    map(read_csv, name_repair = janitor::make_clean_names) |>
+    bind_rows(.id = "year_month") |>
+    mutate(content = clean_content(content)) |>
+    filter(content %in% pf_var_list) |>
+    select(year_month, icb_code, content, value) |>
+    pivot_wider(
+      names_from = content,
+      values_from = value,
+      values_fn = sum,
+      values_fill = 0
+    )
+
 
   df |>
     rename_with(~ str_replace(., "^numberof_pharmacy_first", "n_pf")) |>
@@ -123,75 +144,85 @@ get_dispensing_data <- function(start_date = NULL, end_date = NULL) {
 }
 
 # Calculate summary of counts
-df_dispensing_data <- get_dispensing_data(start_date = "2023-11-01")
-
+df_dispensing_data <- get_dispensing_data(start_date = "2024-02-01")
+View(df_dispensing_data)
+df_dispensing_data_clean <- df_dispensing_data %>%
+  janitor::clean_names()
 df_dispensing_data_summary <- df_dispensing_data |>
-  group_by(date) |>
+  group_by(year_month) |>
   summarise(
-    n_pf_consultation_acute_otitis_media = sum(n_pf_consultation_acute_otitis_media, na.rm = TRUE),
-    n_pf_consultation_acute_sore_throat = sum(n_pf_consultation_acute_sore_throat, na.rm = TRUE),
-    n_pf_consultation_impetigo = sum(n_pf_consultation_impetigo, na.rm = TRUE),
-    n_pf_consultation_infected_insect_bites = sum(n_pf_consultation_infected_insect_bites, na.rm = TRUE),
-    n_pf_consultation_shingles = sum(n_pf_consultation_shingles, na.rm = TRUE),
-    n_pf_consultation_sinusitis = sum(n_pf_consultation_sinusitis, na.rm = TRUE),
-    n_pf_consultation_uncomplicated_uti = sum(n_pf_consultation_uncomplicated_uti, na.rm = TRUE),
+    pharmacy_first_consultation_acute_otitis_media = sum(pharmacy_first_consultation_acute_otitis_media, na.rm = TRUE),
+    pharmacy_first_consultation_acute_sore_throat = sum(pharmacy_first_consultation_acute_sore_throat, na.rm = TRUE),
+    pharmacy_first_consultation_impetigo = sum(pharmacy_first_consultation_impetigo, na.rm = TRUE),
+    pharmacy_first_consultation_infected_insect_bites = sum(pharmacy_first_consultation_infected_insect_bites, na.rm = TRUE),
+    pharmacy_first_consultation_shingles = sum(pharmacy_first_consultation_shingles, na.rm = TRUE),
+    pharmacy_first_consultation_sinusitis = sum(pharmacy_first_consultation_sinusitis, na.rm = TRUE),
+    pharmacy_first_consultation_uncomplicated_uti = sum(pharmacy_first_consultation_uncomplicated_uti, na.rm = TRUE),
+    community_pharmacy_clinic_blood_pressure_checks = sum(community_pharmacy_clinic_blood_pressure_checks, na.rm = TRUE),
+    community_pharmacy_contraceptive_ongoing_consultations = sum(community_pharmacy_contraceptive_ongoing_consultations, na.rm = TRUE),
+    community_pharmacy_contraceptive_initiation_consultations = sum(community_pharmacy_contraceptive_initiation_consultations, na.rm = TRUE),
+    community_pharmacy_contraceptive_emergency_consultations = sum(community_pharmacy_contraceptive_emergency_consultations, na.rm = TRUE)
     # n_pf_urgent_medicine_supply_consultations = sum(n_pf_urgent_medicine_supply_consultations, na.rm = TRUE),
     # n_pf_minor_illness_referral_consultations = sum(n_pf_minor_illness_referral_consultations, na.rm = TRUE)
   ) |>
   pivot_longer(
     cols = c(
-      n_pf_consultation_acute_otitis_media,
-      n_pf_consultation_acute_sore_throat,
-      n_pf_consultation_impetigo,
-      n_pf_consultation_infected_insect_bites,
-      n_pf_consultation_shingles,
-      n_pf_consultation_sinusitis,
-      n_pf_consultation_uncomplicated_uti,
+      pharmacy_first_consultation_acute_otitis_media,
+      pharmacy_first_consultation_acute_sore_throat,
+      pharmacy_first_consultation_impetigo,
+      pharmacy_first_consultation_infected_insect_bites,
+      pharmacy_first_consultation_shingles,
+      pharmacy_first_consultation_sinusitis,
+      pharmacy_first_consultation_uncomplicated_uti,
+      community_pharmacy_clinic_blood_pressure_checks,
+      community_pharmacy_contraceptive_ongoing_consultations,
+      community_pharmacy_contraceptive_initiation_consultations,
+      community_pharmacy_contraceptive_emergency_consultations
       # n_pf_urgent_medicine_supply_consultations,
       # n_pf_minor_illness_referral_consultations
     ),
     names_to = "consultation_type",
     values_to = "count"
   ) |>
-  mutate(consultation_type = str_replace(consultation_type, "^n_pf_consultation_", ""))
+  mutate(consultation_type = str_replace(consultation_type, "^pharmacy_first_consultation_", ""))
 
 fs::dir_create(here("lib", "nhs_comparison_data"))
-write_csv(df_dispensing_data_summary, here("lib", "nhs_comparison_data", "pf_consultation_validation_data.csv"))
+write_csv(df_dispensing_data_summary, here("lib", "nhs_comparison_data", "pf_consultation_validation_data_full.csv"))
 
-# Get counts by region
-icb_region_lookup <- get_icb_region_lookup()
+# # Get counts by region
+# icb_region_lookup <- get_icb_region_lookup()
 
-df_dispensing_data_by_region <- df_dispensing_data |>
-  left_join(icb_region_lookup, by = "icb_code")
+# df_dispensing_data_by_region <- df_dispensing_data |>
+#   left_join(icb_region_lookup, by = "icb_code")
 
-df_dispensing_data_summary_by_region <- df_dispensing_data_by_region |>
-  group_by(date, region) |>
-  summarise(
-    n_pf_consultation_acute_otitis_media = sum(n_pf_consultation_acute_otitis_media, na.rm = TRUE),
-    n_pf_consultation_acute_sore_throat = sum(n_pf_consultation_acute_sore_throat, na.rm = TRUE),
-    n_pf_consultation_impetigo = sum(n_pf_consultation_impetigo, na.rm = TRUE),
-    n_pf_consultation_infected_insect_bites = sum(n_pf_consultation_infected_insect_bites, na.rm = TRUE),
-    n_pf_consultation_shingles = sum(n_pf_consultation_shingles, na.rm = TRUE),
-    n_pf_consultation_sinusitis = sum(n_pf_consultation_sinusitis, na.rm = TRUE),
-    n_pf_consultation_uncomplicated_uti = sum(n_pf_consultation_uncomplicated_uti, na.rm = TRUE),
-    # n_pf_urgent_medicine_supply_consultations = sum(n_pf_urgent_medicine_supply_consultations, na.rm = TRUE),
-    # n_pf_minor_illness_referral_consultations = sum(n_pf_minor_illness_referral_consultations, na.rm = TRUE)
-  ) |>
-  pivot_longer(
-    cols = c(
-      n_pf_consultation_acute_otitis_media,
-      n_pf_consultation_acute_sore_throat,
-      n_pf_consultation_impetigo,
-      n_pf_consultation_infected_insect_bites,
-      n_pf_consultation_shingles,
-      n_pf_consultation_sinusitis,
-      n_pf_consultation_uncomplicated_uti,
-      # n_pf_urgent_medicine_supply_consultations,
-      # n_pf_minor_illness_referral_consultations
-    ),
-    names_to = "consultation_type",
-    values_to = "count"
-  ) |>
-  mutate(consultation_type = str_replace(consultation_type, "^n_pf_consultation_", ""))
+# df_dispensing_data_summary_by_region <- df_dispensing_data_by_region |>
+#   group_by(date, region) |>
+#   summarise(
+#     pharmacy_first_clinical_pathways_consultations_acute_otitis_media = sum(pharmacy_first_clinical_pathways_consultations_acute_otitis_media, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_acute_sore_throat = sum(pharmacy_first_clinical_pathways_consultations_acute_sore_throat, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_impetigo = sum(pharmacy_first_clinical_pathways_consultations_impetigo, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_infected_insect_bites = sum(pharmacy_first_clinical_pathways_consultations_infected_insect_bites, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_shingles = sum(pharmacy_first_clinical_pathways_consultations_shingles, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_sinusitis = sum(pharmacy_first_clinical_pathways_consultations_sinusitis, na.rm = TRUE),
+#     pharmacy_first_clinical_pathways_consultations_uncomplicated_uti = sum(pharmacy_first_clinical_pathways_consultations_uncomplicated_uti, na.rm = TRUE),
+#     # n_pf_urgent_medicine_supply_consultations = sum(n_pf_urgent_medicine_supply_consultations, na.rm = TRUE),
+#     # n_pf_minor_illness_referral_consultations = sum(n_pf_minor_illness_referral_consultations, na.rm = TRUE)
+#   ) |>
+#   pivot_longer(
+#     cols = c(
+#       pharmacy_first_clinical_pathways_consultations_acute_otitis_media,
+#       pharmacy_first_clinical_pathways_consultations_acute_sore_throat,
+#       pharmacy_first_clinical_pathways_consultations_impetigo,
+#       pharmacy_first_clinical_pathways_consultations_infected_insect_bites,
+#       pharmacy_first_clinical_pathways_consultations_shingles,
+#       pharmacy_first_clinical_pathways_consultations_sinusitis,
+#       pharmacy_first_clinical_pathways_consultations_uncomplicated_uti,
+#       # n_pf_urgent_medicine_supply_consultations,
+#       # n_pf_minor_illness_referral_consultations
+#     ),
+#     names_to = "consultation_type",
+#     values_to = "count"
+#   ) |>
+#   mutate(consultation_type = str_replace(consultation_type, "^pharmacy_first_clinical_pathways_consultations_", ""))
 
-write_csv(df_dispensing_data_summary_by_region, here("lib", "nhs_comparison_data", "pf_consultation_validation_data_by_region.csv"))
+# write_csv(df_dispensing_data_summary_by_region, here("lib", "nhs_comparison_data", "pf_consultation_validation_data_by_region.csv"))
