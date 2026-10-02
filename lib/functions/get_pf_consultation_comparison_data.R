@@ -158,6 +158,8 @@ df_dispensing_data_summary <- df_dispensing_data |>
     pharmacy_first_consultation_shingles = sum(pharmacy_first_consultation_shingles, na.rm = TRUE),
     pharmacy_first_consultation_sinusitis = sum(pharmacy_first_consultation_sinusitis, na.rm = TRUE),
     pharmacy_first_consultation_uncomplicated_uti = sum(pharmacy_first_consultation_uncomplicated_uti, na.rm = TRUE),
+    pharmacy_first_urgent_medicine_supply_consultations = sum(pharmacy_first_urgent_medicine_supply_consultations, na.rm = TRUE),
+    pharmacy_first_minor_illness_referral_consultations = sum(pharmacy_first_minor_illness_referral_consultations, na.rm = TRUE),
     community_pharmacy_clinic_blood_pressure_checks = sum(community_pharmacy_clinic_blood_pressure_checks, na.rm = TRUE),
     community_pharmacy_contraceptive_ongoing_consultations = sum(community_pharmacy_contraceptive_ongoing_consultations, na.rm = TRUE),
     community_pharmacy_contraceptive_initiation_consultations = sum(community_pharmacy_contraceptive_initiation_consultations, na.rm = TRUE),
@@ -174,12 +176,12 @@ df_dispensing_data_summary <- df_dispensing_data |>
       pharmacy_first_consultation_shingles,
       pharmacy_first_consultation_sinusitis,
       pharmacy_first_consultation_uncomplicated_uti,
+      pharmacy_first_urgent_medicine_supply_consultations,
+      pharmacy_first_minor_illness_referral_consultations,
       community_pharmacy_clinic_blood_pressure_checks,
       community_pharmacy_contraceptive_ongoing_consultations,
       community_pharmacy_contraceptive_initiation_consultations,
       community_pharmacy_contraceptive_emergency_consultations
-      # n_pf_urgent_medicine_supply_consultations,
-      # n_pf_minor_illness_referral_consultations
     ),
     names_to = "consultation_type",
     values_to = "count"

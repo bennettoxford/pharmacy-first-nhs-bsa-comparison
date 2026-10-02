@@ -6,6 +6,8 @@ year_month,consultation_type,count
 2024-02-01,shingles,4078
 2024-02-01,sinusitis,18384
 2024-02-01,uncomplicated_uti,32678
+2024-02-01,pharmacy_first_urgent_medicine_supply_consultations,78831
+2024-02-01,pharmacy_first_minor_illness_referral_consultations,137396
 2024-02-01,community_pharmacy_clinic_blood_pressure_checks,156009
 2024-02-01,community_pharmacy_contraceptive_ongoing_consultations,9317
 2024-02-01,community_pharmacy_contraceptive_initiation_consultations,1837
@@ -17,6 +19,8 @@ year_month,consultation_type,count
 2024-03-01,shingles,4069
 2024-03-01,sinusitis,17220
 2024-03-01,uncomplicated_uti,34536
+2024-03-01,pharmacy_first_urgent_medicine_supply_consultations,95789
+2024-03-01,pharmacy_first_minor_illness_referral_consultations,131715
 2024-03-01,community_pharmacy_clinic_blood_pressure_checks,169959
 2024-03-01,community_pharmacy_contraceptive_ongoing_consultations,11432
 2024-03-01,community_pharmacy_contraceptive_initiation_consultations,2235
@@ -28,6 +32,8 @@ year_month,consultation_type,count
 2024-04-01,shingles,4470
 2024-04-01,sinusitis,17715
 2024-04-01,uncomplicated_uti,41951
+2024-04-01,pharmacy_first_urgent_medicine_supply_consultations,90851
+2024-04-01,pharmacy_first_minor_illness_referral_consultations,126193
 2024-04-01,community_pharmacy_clinic_blood_pressure_checks,193587
 2024-04-01,community_pharmacy_contraceptive_ongoing_consultations,14986
 2024-04-01,community_pharmacy_contraceptive_initiation_consultations,2803
@@ -39,6 +45,8 @@ year_month,consultation_type,count
 2024-05-01,shingles,4691
 2024-05-01,sinusitis,15909
 2024-05-01,uncomplicated_uti,44340
+2024-05-01,pharmacy_first_urgent_medicine_supply_consultations,110710
+2024-05-01,pharmacy_first_minor_illness_referral_consultations,127706
 2024-05-01,community_pharmacy_clinic_blood_pressure_checks,217472
 2024-05-01,community_pharmacy_contraceptive_ongoing_consultations,17345
 2024-05-01,community_pharmacy_contraceptive_initiation_consultations,3440
@@ -50,6 +58,8 @@ year_month,consultation_type,count
 2024-06-01,shingles,4626
 2024-06-01,sinusitis,15052
 2024-06-01,uncomplicated_uti,43289
+2024-06-01,pharmacy_first_urgent_medicine_supply_consultations,100367
+2024-06-01,pharmacy_first_minor_illness_referral_consultations,115729
 2024-06-01,community_pharmacy_clinic_blood_pressure_checks,209456
 2024-06-01,community_pharmacy_contraceptive_ongoing_consultations,18377
 2024-06-01,community_pharmacy_contraceptive_initiation_consultations,3433
@@ -61,6 +71,8 @@ year_month,consultation_type,count
 2024-07-01,shingles,5103
 2024-07-01,sinusitis,14115
 2024-07-01,uncomplicated_uti,51321
+2024-07-01,pharmacy_first_urgent_medicine_supply_consultations,122269
+2024-07-01,pharmacy_first_minor_illness_referral_consultations,110511
 2024-07-01,community_pharmacy_clinic_blood_pressure_checks,246340
 2024-07-01,community_pharmacy_contraceptive_ongoing_consultations,22919
 2024-07-01,community_pharmacy_contraceptive_initiation_consultations,4337
@@ -72,6 +84,8 @@ year_month,consultation_type,count
 2024-08-01,shingles,5151
 2024-08-01,sinusitis,10970
 2024-08-01,uncomplicated_uti,53389
+2024-08-01,pharmacy_first_urgent_medicine_supply_consultations,134619
+2024-08-01,pharmacy_first_minor_illness_referral_consultations,87405
 2024-08-01,community_pharmacy_clinic_blood_pressure_checks,233965
 2024-08-01,community_pharmacy_contraceptive_ongoing_consultations,23578
 2024-08-01,community_pharmacy_contraceptive_initiation_consultations,4469
@@ -83,6 +97,8 @@ year_month,consultation_type,count
 2024-09-01,shingles,4867
 2024-09-01,sinusitis,15059
 2024-09-01,uncomplicated_uti,56235
+2024-09-01,pharmacy_first_urgent_medicine_supply_consultations,117265
+2024-09-01,pharmacy_first_minor_illness_referral_consultations,88898
 2024-09-01,community_pharmacy_clinic_blood_pressure_checks,230085
 2024-09-01,community_pharmacy_contraceptive_ongoing_consultations,28803
 2024-09-01,community_pharmacy_contraceptive_initiation_consultations,5236
@@ -94,6 +110,8 @@ year_month,consultation_type,count
 2024-10-01,shingles,5344
 2024-10-01,sinusitis,22456
 2024-10-01,uncomplicated_uti,62297
+2024-10-01,pharmacy_first_urgent_medicine_supply_consultations,117325
+2024-10-01,pharmacy_first_minor_illness_referral_consultations,111478
 2024-10-01,community_pharmacy_clinic_blood_pressure_checks,334204
 2024-10-01,community_pharmacy_contraceptive_ongoing_consultations,30273
 2024-10-01,community_pharmacy_contraceptive_initiation_consultations,5431
@@ -105,6 +123,8 @@ year_month,consultation_type,count
 2024-11-01,shingles,5175
 2024-11-01,sinusitis,26379
 2024-11-01,uncomplicated_uti,61395
+2024-11-01,pharmacy_first_urgent_medicine_supply_consultations,121097
+2024-11-01,pharmacy_first_minor_illness_referral_consultations,115194
 2024-11-01,community_pharmacy_clinic_blood_pressure_checks,250051
 2024-11-01,community_pharmacy_contraceptive_ongoing_consultations,32682
 2024-11-01,community_pharmacy_contraceptive_initiation_consultations,5738
@@ -116,6 +136,8 @@ year_month,consultation_type,count
 2024-12-01,shingles,5530
 2024-12-01,sinusitis,37330
 2024-12-01,uncomplicated_uti,65292
+2024-12-01,pharmacy_first_urgent_medicine_supply_consultations,132910
+2024-12-01,pharmacy_first_minor_illness_referral_consultations,128976
 2024-12-01,community_pharmacy_clinic_blood_pressure_checks,188774
 2024-12-01,community_pharmacy_contraceptive_ongoing_consultations,35510
 2024-12-01,community_pharmacy_contraceptive_initiation_consultations,5132
@@ -127,6 +149,8 @@ year_month,consultation_type,count
 2025-01-01,shingles,5257
 2025-01-01,sinusitis,38113
 2025-01-01,uncomplicated_uti,60923
+2025-01-01,pharmacy_first_urgent_medicine_supply_consultations,113535
+2025-01-01,pharmacy_first_minor_illness_referral_consultations,118808
 2025-01-01,community_pharmacy_clinic_blood_pressure_checks,228096
 2025-01-01,community_pharmacy_contraceptive_ongoing_consultations,41719
 2025-01-01,community_pharmacy_contraceptive_initiation_consultations,6735
@@ -138,6 +162,8 @@ year_month,consultation_type,count
 2025-02-01,shingles,5352
 2025-02-01,sinusitis,37831
 2025-02-01,uncomplicated_uti,57763
+2025-02-01,pharmacy_first_urgent_medicine_supply_consultations,109441
+2025-02-01,pharmacy_first_minor_illness_referral_consultations,114438
 2025-02-01,community_pharmacy_clinic_blood_pressure_checks,250131
 2025-02-01,community_pharmacy_contraceptive_ongoing_consultations,39474
 2025-02-01,community_pharmacy_contraceptive_initiation_consultations,6907
@@ -149,6 +175,8 @@ year_month,consultation_type,count
 2025-03-01,shingles,6236
 2025-03-01,sinusitis,38989
 2025-03-01,uncomplicated_uti,59543
+2025-03-01,pharmacy_first_urgent_medicine_supply_consultations,125972
+2025-03-01,pharmacy_first_minor_illness_referral_consultations,117746
 2025-03-01,community_pharmacy_clinic_blood_pressure_checks,257942
 2025-03-01,community_pharmacy_contraceptive_ongoing_consultations,45751
 2025-03-01,community_pharmacy_contraceptive_initiation_consultations,7651
@@ -160,6 +188,8 @@ year_month,consultation_type,count
 2025-04-01,shingles,6197
 2025-04-01,sinusitis,34969
 2025-04-01,uncomplicated_uti,59901
+2025-04-01,pharmacy_first_urgent_medicine_supply_consultations,158452
+2025-04-01,pharmacy_first_minor_illness_referral_consultations,108867
 2025-04-01,community_pharmacy_clinic_blood_pressure_checks,285058
 2025-04-01,community_pharmacy_contraceptive_ongoing_consultations,52128
 2025-04-01,community_pharmacy_contraceptive_initiation_consultations,8287
@@ -171,6 +201,8 @@ year_month,consultation_type,count
 2025-05-01,shingles,6512
 2025-05-01,sinusitis,29731
 2025-05-01,uncomplicated_uti,63822
+2025-05-01,pharmacy_first_urgent_medicine_supply_consultations,166298
+2025-05-01,pharmacy_first_minor_illness_referral_consultations,98800
 2025-05-01,community_pharmacy_clinic_blood_pressure_checks,259765
 2025-05-01,community_pharmacy_contraceptive_ongoing_consultations,59035
 2025-05-01,community_pharmacy_contraceptive_initiation_consultations,9380
@@ -182,6 +214,8 @@ year_month,consultation_type,count
 2025-06-01,shingles,6843
 2025-06-01,sinusitis,26017
 2025-06-01,uncomplicated_uti,63829
+2025-06-01,pharmacy_first_urgent_medicine_supply_consultations,132461
+2025-06-01,pharmacy_first_minor_illness_referral_consultations,98497
 2025-06-01,community_pharmacy_clinic_blood_pressure_checks,262385
 2025-06-01,community_pharmacy_contraceptive_ongoing_consultations,63895
 2025-06-01,community_pharmacy_contraceptive_initiation_consultations,9815
@@ -193,6 +227,8 @@ year_month,consultation_type,count
 2025-07-01,shingles,7557
 2025-07-01,sinusitis,19845
 2025-07-01,uncomplicated_uti,74029
+2025-07-01,pharmacy_first_urgent_medicine_supply_consultations,139463
+2025-07-01,pharmacy_first_minor_illness_referral_consultations,95621
 2025-07-01,community_pharmacy_clinic_blood_pressure_checks,286646
 2025-07-01,community_pharmacy_contraceptive_ongoing_consultations,72571
 2025-07-01,community_pharmacy_contraceptive_initiation_consultations,10786
@@ -204,6 +240,8 @@ year_month,consultation_type,count
 2025-08-01,shingles,7081
 2025-08-01,sinusitis,19560
 2025-08-01,uncomplicated_uti,73734
+2025-08-01,pharmacy_first_urgent_medicine_supply_consultations,154278
+2025-08-01,pharmacy_first_minor_illness_referral_consultations,81459
 2025-08-01,community_pharmacy_clinic_blood_pressure_checks,242036
 2025-08-01,community_pharmacy_contraceptive_ongoing_consultations,68410
 2025-08-01,community_pharmacy_contraceptive_initiation_consultations,9202
@@ -215,6 +253,8 @@ year_month,consultation_type,count
 2025-09-01,shingles,6805
 2025-09-01,sinusitis,26286
 2025-09-01,uncomplicated_uti,77718
+2025-09-01,pharmacy_first_urgent_medicine_supply_consultations,133402
+2025-09-01,pharmacy_first_minor_illness_referral_consultations,89610
 2025-09-01,community_pharmacy_clinic_blood_pressure_checks,263163
 2025-09-01,community_pharmacy_contraceptive_ongoing_consultations,77510
 2025-09-01,community_pharmacy_contraceptive_initiation_consultations,9457
@@ -226,6 +266,8 @@ year_month,consultation_type,count
 2025-10-01,shingles,7045
 2025-10-01,sinusitis,36943
 2025-10-01,uncomplicated_uti,80514
+2025-10-01,pharmacy_first_urgent_medicine_supply_consultations,135225
+2025-10-01,pharmacy_first_minor_illness_referral_consultations,113160
 2025-10-01,community_pharmacy_clinic_blood_pressure_checks,382067
 2025-10-01,community_pharmacy_contraceptive_ongoing_consultations,78970
 2025-10-01,community_pharmacy_contraceptive_initiation_consultations,9801
@@ -237,6 +279,8 @@ year_month,consultation_type,count
 2025-11-01,shingles,7009
 2025-11-01,sinusitis,37056
 2025-11-01,uncomplicated_uti,75263
+2025-11-01,pharmacy_first_urgent_medicine_supply_consultations,135061
+2025-11-01,pharmacy_first_minor_illness_referral_consultations,112918
 2025-11-01,community_pharmacy_clinic_blood_pressure_checks,259904
 2025-11-01,community_pharmacy_contraceptive_ongoing_consultations,75853
 2025-11-01,community_pharmacy_contraceptive_initiation_consultations,10836
@@ -248,6 +292,8 @@ year_month,consultation_type,count
 2025-12-01,shingles,7981
 2025-12-01,sinusitis,54784
 2025-12-01,uncomplicated_uti,82211
+2025-12-01,pharmacy_first_urgent_medicine_supply_consultations,146892
+2025-12-01,pharmacy_first_minor_illness_referral_consultations,132710
 2025-12-01,community_pharmacy_clinic_blood_pressure_checks,228233
 2025-12-01,community_pharmacy_contraceptive_ongoing_consultations,86444
 2025-12-01,community_pharmacy_contraceptive_initiation_consultations,10935
@@ -259,6 +305,8 @@ year_month,consultation_type,count
 2026-01-01,shingles,7795
 2026-01-01,sinusitis,53780
 2026-01-01,uncomplicated_uti,72234
+2026-01-01,pharmacy_first_urgent_medicine_supply_consultations,134871
+2026-01-01,pharmacy_first_minor_illness_referral_consultations,116740
 2026-01-01,community_pharmacy_clinic_blood_pressure_checks,237455
 2026-01-01,community_pharmacy_contraceptive_ongoing_consultations,84290
 2026-01-01,community_pharmacy_contraceptive_initiation_consultations,12770
@@ -270,6 +318,8 @@ year_month,consultation_type,count
 2026-02-01,shingles,7134
 2026-02-01,sinusitis,50458
 2026-02-01,uncomplicated_uti,69294
+2026-02-01,pharmacy_first_urgent_medicine_supply_consultations,122085
+2026-02-01,pharmacy_first_minor_illness_referral_consultations,111310
 2026-02-01,community_pharmacy_clinic_blood_pressure_checks,245153
 2026-02-01,community_pharmacy_contraceptive_ongoing_consultations,66526
 2026-02-01,community_pharmacy_contraceptive_initiation_consultations,12409
@@ -281,6 +331,8 @@ year_month,consultation_type,count
 2026-03-01,shingles,8280
 2026-03-01,sinusitis,49191
 2026-03-01,uncomplicated_uti,75402
+2026-03-01,pharmacy_first_urgent_medicine_supply_consultations,138051
+2026-03-01,pharmacy_first_minor_illness_referral_consultations,123384
 2026-03-01,community_pharmacy_clinic_blood_pressure_checks,270337
 2026-03-01,community_pharmacy_contraceptive_ongoing_consultations,74126
 2026-03-01,community_pharmacy_contraceptive_initiation_consultations,13757
@@ -292,7 +344,35 @@ year_month,consultation_type,count
 2026-04-01,shingles,8150
 2026-04-01,sinusitis,41102
 2026-04-01,uncomplicated_uti,71073
+2026-04-01,pharmacy_first_urgent_medicine_supply_consultations,176397
+2026-04-01,pharmacy_first_minor_illness_referral_consultations,113070
 2026-04-01,community_pharmacy_clinic_blood_pressure_checks,305338
 2026-04-01,community_pharmacy_contraceptive_ongoing_consultations,81819
 2026-04-01,community_pharmacy_contraceptive_initiation_consultations,13839
 2026-04-01,community_pharmacy_contraceptive_emergency_consultations,70057
+2026-05-01,acute_otitis_media,33205
+2026-05-01,acute_sore_throat,112607
+2026-05-01,impetigo,10182
+2026-05-01,infected_insect_bites,35748
+2026-05-01,shingles,8609
+2026-05-01,sinusitis,35535
+2026-05-01,uncomplicated_uti,72299
+2026-05-01,pharmacy_first_urgent_medicine_supply_consultations,188745
+2026-05-01,pharmacy_first_minor_illness_referral_consultations,112932
+2026-05-01,community_pharmacy_clinic_blood_pressure_checks,288637
+2026-05-01,community_pharmacy_contraceptive_ongoing_consultations,88006
+2026-05-01,community_pharmacy_contraceptive_initiation_consultations,13912
+2026-05-01,community_pharmacy_contraceptive_emergency_consultations,76326
+2026-06-01,acute_otitis_media,36352
+2026-06-01,acute_sore_throat,106750
+2026-06-01,impetigo,10767
+2026-06-01,infected_insect_bites,78301
+2026-06-01,shingles,9823
+2026-06-01,sinusitis,30850
+2026-06-01,uncomplicated_uti,80132
+2026-06-01,pharmacy_first_urgent_medicine_supply_consultations,164120
+2026-06-01,pharmacy_first_minor_illness_referral_consultations,114353
+2026-06-01,community_pharmacy_clinic_blood_pressure_checks,293651
+2026-06-01,community_pharmacy_contraceptive_ongoing_consultations,96434
+2026-06-01,community_pharmacy_contraceptive_initiation_consultations,16348
+2026-06-01,community_pharmacy_contraceptive_emergency_consultations,79348
