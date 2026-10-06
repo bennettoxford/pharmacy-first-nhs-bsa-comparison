@@ -67,6 +67,38 @@ df_bsa_consultation_validation <- read_csv(
 #   filter(date >= "2024-02-01")
 
 df_bsa_validation <- df_bsa_consultation_validation %>% 
-  filter(year_month >= "2024-02-01")
+  filter(year_month >= "2021-10-01")
 write_csv(df_bsa_validation, here("lib", "nhs_comparison_data", "df_bsa_validation_full.csv"))
 rm(df_bsa_consultation_validation)
+
+library(tidyverse)
+
+df <- read_csv(
+  here("lib", "nhs_comparison_data", "pf_consultation_validation_data_full.csv")
+)
+
+df_grouped <- df %>%
+  mutate(
+    consultation_type = case_when(
+      consultation_type %in% c(
+        "acute_otitis_media",
+        "acute_sore_throat",
+        "impetigo",
+        "infected_insect_bites",
+        "shingles",
+        "sinusitis",
+        "uncomplicated_uti"
+      ) ~ "pharmacy_first_seven_pathways",
+      
+      str_detect(consultation_type, "contraceptive") ~ "contraception_service",
+      
+      TRUE ~ consultation_type
+    )
+  ) %>%
+  group_by(year_month, consultation_type) %>%
+  summarise(
+    count = sum(count, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+write_csv(df_grouped, here("lib", "nhs_comparison_data", "pf_consultation_validation_data_full_grouped.csv"))
