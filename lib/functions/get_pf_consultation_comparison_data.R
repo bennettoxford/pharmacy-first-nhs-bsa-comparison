@@ -57,7 +57,7 @@ extract_dates <- function(urls) {
     })
 }
 
-get_dispensing_urls <- function(start_date = "2024-02-01", end_date = NULL) {
+get_dispensing_urls <- function(start_date = "2021-10-01", end_date = NULL) {
   # This is the URL where the data is linked from
   url <- "https://opendata.nhsbsa.net/dataset/pharmacy-and-appliance-contractor-dispensing-data"
 
@@ -92,8 +92,8 @@ get_dispensing_urls <- function(start_date = "2024-02-01", end_date = NULL) {
   setNames(as.list(df$url), as.character(df$date))
 }
 
-get_dispensing_data <- function(start_date = "2024-02-01", end_date = NULL) {
-  dispensing_urls <- get_dispensing_urls(start_date = "2024-02-01", end_date = NULL)
+get_dispensing_data <- function(start_date = "2021-10-01", end_date = NULL) {
+  dispensing_urls <- get_dispensing_urls(start_date = "2021-10-01", end_date = NULL)
 
   icb_var_list <- c(
     "ICB_CODE",
@@ -144,7 +144,7 @@ clean_content <- function(x) {
 }
 
 # Calculate summary of counts
-df_dispensing_data <- get_dispensing_data(start_date = "2024-02-01")
+df_dispensing_data <- get_dispensing_data(start_date = "2021-10-01")
 View(df_dispensing_data)
 df_dispensing_data_clean <- df_dispensing_data %>%
   janitor::clean_names()
