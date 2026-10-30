@@ -1,8 +1,12 @@
-generate_validation_comparison_dataset <- function(df_bsa_validation, df_pf_consultations_total) {
+generate_validation_comparison_dataset <- function(
+  df_bsa_validation,
+  df_pf_consultations_total
+) {
   # Load NHS BSA validation data and summarise total count by:
   # 1. pf_consultation
   # 2. pf_medication
   df_bsa_validation_total <- df_bsa_validation |>
+    rename(date = year_month) |>
     group_by(date, data_desc, count_method) |>
     mutate(count_total = sum(count, na.rm = TRUE)) |>
     select(-count_group, -count) |>
@@ -44,7 +48,11 @@ generate_validation_comparison_dataset <- function(df_bsa_validation, df_pf_cons
     ) |>
     select(
       date = interval_start,
-      data_source, data_desc, count_desc, count_group, count_method,
+      data_source,
+      data_desc,
+      count_desc,
+      count_group,
+      count_method,
       count = pf_consultation_total
     )
 
@@ -65,7 +73,7 @@ generate_validation_comparison_dataset <- function(df_bsa_validation, df_pf_cons
   #     count_desc, count_group, count_method, count
   #   )
 
-  df_os_validation_total <-  df_os_consultation_from_id_validation %>%
+  df_os_validation_total <- df_os_consultation_from_id_validation %>%
     group_by(date, data_desc, count_desc, count_method) |>
     mutate(count_total = sum(count, na.rm = TRUE)) |>
     select(-count_group, -count) |>
@@ -74,7 +82,7 @@ generate_validation_comparison_dataset <- function(df_bsa_validation, df_pf_cons
 
   # Combine NHS BSA and OpenSAFELY data
   pf_validation <- bind_rows(df_bsa_validation_total, df_os_validation_total)
-  
+
   # Pharmacy First Consultations
   # Instead of only using the count of PF consultations in OS with a clinical
   # condition we are using all PF consultations with a consultation id
@@ -91,10 +99,12 @@ generate_validation_comparison_dataset <- function(df_bsa_validation, df_pf_cons
   # Pivot wider to calculate ratio
   df_pf_consultation_validation_plot <- df_pf_consultation_validation_plot |>
     select(date, data_source, count_method, count_total) |>
-    pivot_wider(names_from = c(data_source, count_method), values_from = count_total) |>
+    pivot_wider(
+      names_from = c(data_source, count_method),
+      values_from = count_total
+    ) |>
     mutate(ratio = opensafely_opensafely_tpp / nhs_bsa_count_100pct) %>%
     filter(date < "2025-02-01")
 
   return(df_pf_consultation_validation_plot)
 }
-
