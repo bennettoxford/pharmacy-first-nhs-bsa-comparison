@@ -227,6 +227,7 @@ ggsave(
   filename = here("output", "fig2_pf_os_nhsbsa_comparison.png"),
   pf_validation_consultation_plot,
   height = 4,
-  width = 8
+  width = 8,
+  create.dir = TRUE
 )
 ```
